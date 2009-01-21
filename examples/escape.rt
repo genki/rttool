@@ -1,0 +1,4 @@
+delimiter = ;
+escape = \
+
+\z   ; \;1 ; 2

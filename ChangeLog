@@ -1,0 +1,62 @@
+2005-10-27 23:00  rubikitch
+
+	* examples/rttest.html: rdtool-0.6.18
+
+2005-10-27 22:58  rubikitch
+
+	* Rakefile, rttool-rctool, bin/rt/rdrt2, lib/PATHCONV, setup/rt.rb:
+	  Removed .rd2rc(RCtool) dependency.
+
+2005-10-26 06:17  rubikitch
+
+	* lib/rt/rtparser.rb: Listed all the attributes of ConfigBlock.
+
+2005-10-26 06:02  rubikitch
+
+	* setup/rt.rb: use RCtool
+
+2005-10-23 09:57  rubikitch
+
+	* examples/escape.html, examples/escape.rt, test/test.rb: supported
+	  escape
+
+2005-10-22 17:38  rubikitch
+
+	* lib/rt/rtparser.rb, test/test-rtparser.rb: supported escape
+
+2005-10-22 17:05  rubikitch
+
+	* lib/rt/rt2html-lib.rb, lib/rt/rtparser.rb, test/test-rtparser.rb:
+	  refactored
+
+2005-10-19 15:27  rubikitch
+
+	* setup.rb: ruby 1.8 warning fixed.  ignore CVS directory.
+
+2005-10-19 06:25  rubikitch
+
+	* examples/: test1.html, test1.rt, test2.html, test2.rt: Japanese
+	  -> English
+
+2005-10-19 06:25  rubikitch
+
+	* lib/rt/rt2html-lib.rb: removed test code
+
+2005-10-16 22:40  rubikitch
+
+	* GPL, README.ja, dot.rt.rd2rc, rt.html, rt.rd, setup.rb,
+	  bin/PATHCONV, bin/rt/rdrt2, bin/rt/rt2, examples/rttest.rd,
+	  examples/test1.rt, examples/test2.rt, lib/PATHCONV,
+	  lib/rt/rt2html-lib.rb, lib/rt/rt2txt-lib.rb, lib/rt/rtparser.rb,
+	  lib/rt/rtvisitor.rb, lib/rt/w3m.rb, setup/rt.rb,
+	  test/test-rtparser.rb: Initial revision
+
+2005-10-16 22:40  rubikitch
+
+	* GPL, README.ja, dot.rt.rd2rc, rt.html, rt.rd, setup.rb,
+	  bin/PATHCONV, bin/rt/rdrt2, bin/rt/rt2, examples/rttest.rd,
+	  examples/test1.rt, examples/test2.rt, lib/PATHCONV,
+	  lib/rt/rt2html-lib.rb, lib/rt/rt2txt-lib.rb, lib/rt/rtparser.rb,
+	  lib/rt/rtvisitor.rb, lib/rt/w3m.rb, setup/rt.rb,
+	  test/test-rtparser.rb: rttool
+

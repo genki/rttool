@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="iso-2022-jp" ?>
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+<title>RTtool</title>
+<meta http-equiv="Content-type" content="text/html; charset=iso-2022-jp" />
+<!-- head-element:nil -->
+</head>
+<body>
+<h2>Index</h2>
+
+<ul>
+<li><p><a href="#label:1">更新履歴</a></p>
+<ul>
+<li><a href="#label:2">[2006/09/20] 1.0.2 released</a></li>
+<li><a href="#label:3">[2005/10/28] 1.0.1 released</a></li>
+<li><a href="#label:4">[2005/10/26] 1.0.0 released</a></li>
+<li><a href="#label:5">[2001/11/15] 0.1.7 released</a></li>
+<li><a href="#label:6">[2001/08/07] 0.1.6 released</a></li>
+<li><a href="#label:7">[2001/07/17] 0.1.5 released</a></li>
+<li><a href="#label:8">[2001/07/09] 0.1.4 released</a></li>
+<li><a href="#label:9">[2001/06/03] 0.1.3 released</a></li>
+</ul></li>
+<li><a href="#label:10">概要</a></li>
+<li><a href="#label:11">インストール</a></li>
+<li><a href="#label:12">RTの文法</a></li>
+<li><a href="#label:16">属性一覧</a></li>
+<li><p><a href="#label:22">例</a></p>
+<ul>
+<li><a href="#label:23">一番簡単なRT</a></li>
+<li><a href="#label:24">エスケープ</a></li>
+<li><a href="#label:25">ちょっと複雑なRT</a></li>
+<li><a href="#label:26">RDに埋め込む</a></li>
+</ul></li>
+<li><a href="#label:27">なぜにRT</a></li>
+<li><a href="#label:28">TODO</a></li>
+<li><a href="#label:29">ライセンス</a></li>
+</ul>
+<hr />
+
+<h1><a name="Title:" href="#Title:">Title:</a> <a name="label:0">RTtool</a></h1><!-- RDLabel: "RTtool" -->
+
+<h2><a name="1" href="#1">1</a> <a name="label:1">更新履歴</a></h2><!-- RDLabel: "更新履歴" -->
+
+<h3><a name="1.1" href="#1.1">1.1</a> <a name="label:2">[2006/09/20] 1.0.2 released</a></h3><!-- RDLabel: "[2006/09/20] 1.0.2 released" -->
+
+<ul>
+<li>改行コードがDOS, MACだとうまく動作しないバグを修正。</li>
+</ul>
+<h3><a name="1.2" href="#1.2">1.2</a> <a name="label:3">[2005/10/28] 1.0.1 released</a></h3><!-- RDLabel: "[2005/10/28] 1.0.1 released" -->
+
+<ul>
+<li>.rd2rcを使わなくなった。</li>
+</ul>
+<h3><a name="1.3" href="#1.3">1.3</a> <a name="label:4">[2005/10/26] 1.0.0 released</a></h3><!-- RDLabel: "[2005/10/26] 1.0.0 released" -->
+
+<ul>
+<li>エスケープできるようになった。英語のドキュメント付属。</li>
+<li>Ruby1.8のwarningを削除。</li>
+</ul>
+<h3><a name="1.4" href="#1.4">1.4</a> <a name="label:5">[2001/11/15] 0.1.7 released</a></h3><!-- RDLabel: "[2001/11/15] 0.1.7 released" -->
+
+<ul>
+<li>符号つきの数字でも右揃えにするようにした。</li>
+</ul>
+<h3><a name="1.5" href="#1.5">1.5</a> <a name="label:6">[2001/08/07] 0.1.6 released</a></h3><!-- RDLabel: "[2001/08/07] 0.1.6 released" -->
+
+<ul>
+<li>空白セルの処理でのバグを対処。</li>
+</ul>
+<h3><a name="1.6" href="#1.6">1.6</a> <a name="label:7">[2001/07/17] 0.1.5 released</a></h3><!-- RDLabel: "[2001/07/17] 0.1.5 released" -->
+
+<ul>
+<li>rt2html-lib.rb: captionが指定してないときはCAPTION要素をつけないように。</li>
+</ul>
+<h3><a name="1.7" href="#1.7">1.7</a> <a name="label:8">[2001/07/09] 0.1.4 released</a></h3><!-- RDLabel: "[2001/07/09] 0.1.4 released" -->
+
+<ul>
+<li>あおきさんのsetup.rbを使用。 それに伴い、パッケージ構成を変更。</li>
+</ul>
+<h3><a name="1.8" href="#1.8">1.8</a> <a name="label:9">[2001/06/03] 0.1.3 released</a></h3><!-- RDLabel: "[2001/06/03] 0.1.3 released" -->
+
+<ul>
+<li>rt2html-lib.rbにおいてタグを小文字に変更。これでXHTMLでも大丈夫。</li>
+</ul>
+<h2><a name="2" href="#2">2</a> <a name="label:10">概要</a></h2><!-- RDLabel: "概要" -->
+
+<p>RTtoolはシンプルな作表ツール。
+RDの売りである<em>可読性</em>と<em>さまざまなフォーマットに変換可能</em>を継承し、
+RDtoolの実験的機能ではあるがfilter機能によりRDと<em>融合</em>させることが可能である。
+いってみれば<em>兄弟みたいなものである。</em></p>
+<p>今のところ、RTはHTMLとPlain text（要<a href="http://w3m.sourceforge.net/">w3m</a>）へ変換できる。
+w3mのWindows版はCygwinしかないので、Windowsの人はCygwinを使う必要がある。
+HTMLへの変換のみ必要ならばw3mは不要である。</p>
+<p>設計の方もRDtoolと似せている。
+parserとvisitorに分け、rt2html-lib.rbを作成。</p>
+<h2><a name="3" href="#3">3</a> <a name="label:11">インストール</a></h2><!-- RDLabel: "インストール" -->
+
+<p>以下のコマンドを実行。</p>
+<pre>ruby -ropen-uri -e 'URI("http://www.rubyist.net/~rubikitch/archive/rttool-1.0.2.tar.gz").read.display' &gt; rttool-1.0.2.tar.gz</pre>
+<pre>tar xzvf rttool-1.0.2.tar.gz</pre>
+<p>失敗する場合は次のリンクからダウンロード。</p>
+<ul>
+<li><a href="http://www.rubyist.net/~rubikitch/archive/rttool-1.0.2.tar.gz">rttool-1.0.2.tar.gz</a></li>
+</ul>
+<p>それから次のコマンドでインストール。</p>
+<pre>cd rttool-1.0.2
+ruby setup.rb config
+ruby setup.rb setup
+ruby setup.rb install</pre>
+<ol>
+<li><p>パッケージにある rt ディレクトリを $LOAD_PATH の通ったディレクトリにコピーする。</p>
+<ul>
+<li><code>require 'rt/rtparse'</code>と使われるので。</li>
+</ul></li>
+<li>rt/rt2 コマンドを PATH の通ったディレクトリに移動する。</li>
+<li><p>rt/dot.rt.rd2rc</p>
+<ul>
+<li>もし ~/.rd2rc というファイルが存在しなければ、 ~/.rd2rc にリネーム。</li>
+<li>存在するときは、差分を適宜設定する。</li>
+</ul></li>
+</ol>
+<h2><a name="4" href="#4">4</a> <a name="label:12">RTの文法</a></h2><!-- RDLabel: "RTの文法" -->
+
+<ul>
+<li><p>RTは3つのBlockで構成される</p>
+<dl>
+<dt><a name="label:13" id="label:13"></a>ConfigBlock</dt><!-- RDLabel: "ConfigBlock" -->
+<dd>
+<p>「属性 = 値」の組からなる。
+以下の例では caption 属性を設定し、表題をつけている。
+このBlockは省略できる。</p>
+</dd>
+<dt><a name="label:14" id="label:14"></a>HeaderBlock</dt><!-- RDLabel: "HeaderBlock" -->
+<dd>
+<p>HTMLでいうTHEADの部分。
+表のヘッダを設定する。
+ヘッダは中央揃えになる。
+このBlockも省略できる。</p>
+</dd>
+<dt><a name="label:15" id="label:15"></a>BodyBlock</dt><!-- RDLabel: "BodyBlock" -->
+<dd>
+<p>HTMLでいうTBODYの部分。
+データを記述する。
+数字は右揃え、それ以外は左揃えになる。</p>
+</dd>
+</dl></li>
+<li><p>HeaderBlock, BodyBlock の項目の区切は , かTabである。</p>
+<ul>
+<li>必ずしも上の行と揃っている必要はない。
+    ただ、揃えた方が見やすいとはいえる。</li>
+<li>区切文字は delimiter 属性の値を変えることで任意の文字列にできる。</li>
+</ul></li>
+<li><p>==は左の列を伸ばす。
+  HTMLでいうTH、TD要素のcolspan属性に影響。</p>
+<ul>
+<li>rowspan 属性の値を変えることで任意の文字列にできる。</li>
+</ul></li>
+<li><p>||は上の行を伸ばす。
+  HTMLでいうTH、TD要素のrowspan属性に影響。</p>
+<ul>
+<li>colspan 属性の値を変えることで任意の文字にできる。</li>
+</ul></li>
+</ul>
+<h2><a name="5" href="#5">5</a> <a name="label:16">属性一覧</a></h2><!-- RDLabel: "属性一覧" -->
+
+<p>ConfigBlockでは次の属性が設定できる。</p>
+<dl>
+<dt><a name="label:17" id="label:17"></a>caption</dt><!-- RDLabel: "caption" -->
+<dd>
+<p>表のタイトルを設定する。</p>
+</dd>
+<dt><a name="label:18" id="label:18"></a>delimiter</dt><!-- RDLabel: "delimiter" -->
+<dd>
+<p>データの区切を指定する。</p>
+</dd>
+<dt><a name="label:19" id="label:19"></a>rowspan</dt><!-- RDLabel: "rowspan" -->
+<dd>
+<p>左の列を伸ばす指定。（デフォルトは<code>==</code>）</p>
+</dd>
+<dt><a name="label:20" id="label:20"></a>colspan</dt><!-- RDLabel: "colspan" -->
+<dd>
+<p>上の行を伸ばす設定。（デフォルトは<code>||</code>）</p>
+</dd>
+<dt><a name="label:21" id="label:21"></a>escape</dt><!-- RDLabel: "escape" -->
+<dd>
+<p>delimiterをデータに含める必要があるときにこの属性で指定された文字を前置する。
+デフォルトでは無効となっている。</p>
+</dd>
+</dl>
+<h2><a name="6" href="#6">6</a> <a name="label:22">例</a></h2><!-- RDLabel: "例" -->
+
+<h3><a name="6.1" href="#6.1">6.1</a> <a name="label:23">一番簡単なRT</a></h3><!-- RDLabel: "一番簡単なRT" -->
+
+<p>値をカンマで区切るのが一番簡単なRT。</p>
+<pre>$ cat examples/easiest.rt
+1, 2, 3
+4, 5, 6
+7, 8, 9
+
+$ rt2 examples/easiest.rt
+┌─┬─┬─┐
+│ 1│ 2│ 3│
+├─┼─┼─┤
+│ 4│ 5│ 6│
+├─┼─┼─┤
+│ 7│ 8│ 9│
+└─┴─┴─┘
+
+$ rt2 -r rt/rt2html-lib examples/easiest.rt
+&lt;!-- setup --&gt;
+&lt;table border="1"&gt;
+&lt;!-- setup end --&gt;
+
+&lt;!-- Header --&gt;
+&lt;!-- Header end --&gt;
+
+&lt;!-- Body --&gt;
+&lt;tbody&gt;
+&lt;tr&gt;&lt;td align="right"&gt;1&lt;/td&gt;&lt;td align="right"&gt;2&lt;/td&gt;&lt;td align="right"&gt;3&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td align="right"&gt;4&lt;/td&gt;&lt;td align="right"&gt;5&lt;/td&gt;&lt;td align="right"&gt;6&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td align="right"&gt;7&lt;/td&gt;&lt;td align="right"&gt;8&lt;/td&gt;&lt;td align="right"&gt;9&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;!-- Body end --&gt;
+
+&lt;!-- teardown --&gt;
+&lt;/table&gt;
+&lt;!-- teardown end --&gt;</pre>
+<h3><a name="6.2" href="#6.2">6.2</a> <a name="label:24">エスケープ</a></h3><!-- RDLabel: "エスケープ" -->
+
+<p>RTはdelimiterを自由に指定できるが、delimiterを地の文に含める必要があるとき、</p>
+<ul>
+<li>delimiterを別なものに置換するか</li>
+<li>1.0.0で導入されたエスケープを使う</li>
+</ul>
+<p>エスケープは、delimiter文字の前に置くことで、delimiterではなくて地の文とみなされる。</p>
+<pre>$ cat examples/escape.rt
+delimiter = ;
+escape = \
+
+\z   ; \;1 ; 2
+
+$ rt2 examples/escape.rt
+┌─┬─┬─┐
+│\z│;1│ 2│
+└─┴─┴─┘
+
+$ rt2 -r rt/rt2html-lib examples/escape.rt
+&lt;!-- setup --&gt;
+&lt;table border="1"&gt;
+&lt;!-- setup end --&gt;
+
+&lt;!-- Header --&gt;
+&lt;!-- Header end --&gt;
+
+&lt;!-- Body --&gt;
+&lt;tbody&gt;
+&lt;tr&gt;&lt;td align="left"&gt;\z&lt;/td&gt;&lt;td align="left"&gt;;1&lt;/td&gt;&lt;td align="right"&gt;2&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;!-- Body end --&gt;
+
+&lt;!-- teardown --&gt;
+&lt;/table&gt;
+&lt;!-- teardown end --&gt;</pre>
+<h3><a name="6.3" href="#6.3">6.3</a> <a name="label:25">ちょっと複雑なRT</a></h3><!-- RDLabel: "ちょっと複雑なRT" -->
+
+<pre>$ cat examples/test1.rt
+caption = Test Table
+
+     , Human, == , Dog , ==
+||  , M  , F ,M,F
+
+  x  , 1.0 , 2.0, 1.1, 1.2
+  y  , 0.4 , 0.5, 0.3, 0.1
+
+$ rt2 examples/test1.rt
+          Test Table
+┌─┬─────┬─────┐
+│  │  Human   │   Dog    │
+│  ├──┬──┼──┬──┤
+│  │ M  │ F  │ M  │ F  │
+├─┼──┼──┼──┼──┤
+│x │ 1.0│ 2.0│ 1.1│ 1.2│
+├─┼──┼──┼──┼──┤
+│y │ 0.4│ 0.5│ 0.3│ 0.1│
+└─┴──┴──┴──┴──┘
+
+$ rt2 -r rt/rt2html-lib examples/test1.rt
+&lt;!-- setup --&gt;
+&lt;table border="1"&gt;
+&lt;caption&gt;Test Table&lt;/caption&gt;
+&lt;!-- setup end --&gt;
+
+&lt;!-- Header --&gt;
+&lt;thead&gt;
+&lt;tr&gt;&lt;th rowspan="2"&gt;&lt;/th&gt;&lt;th colspan="2"&gt;Human&lt;/th&gt;&lt;th colspan="2"&gt;Dog&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;th&gt;M&lt;/th&gt;&lt;th&gt;F&lt;/th&gt;&lt;th&gt;M&lt;/th&gt;&lt;th&gt;F&lt;/th&gt;&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;!-- Header end --&gt;
+
+&lt;!-- Body --&gt;
+&lt;tbody&gt;
+&lt;tr&gt;&lt;td align="left"&gt;x&lt;/td&gt;&lt;td align="right"&gt;1.0&lt;/td&gt;&lt;td align="right"&gt;2.0&lt;/td&gt;&lt;td align="right"&gt;1.1&lt;/td&gt;&lt;td align="right"&gt;1.2&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td align="left"&gt;y&lt;/td&gt;&lt;td align="right"&gt;0.4&lt;/td&gt;&lt;td align="right"&gt;0.5&lt;/td&gt;&lt;td align="right"&gt;0.3&lt;/td&gt;&lt;td align="right"&gt;0.1&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;!-- Body end --&gt;
+
+&lt;!-- teardown --&gt;
+&lt;/table&gt;
+&lt;!-- teardown end --&gt;</pre>
+<h3><a name="6.4" href="#6.4">6.4</a> <a name="label:26">RDに埋め込む</a></h3><!-- RDLabel: "RDに埋め込む" -->
+
+<p>さらに、RDに埋め込むこともできるのだ。
+RTは<em>RDではないのでRDのfilter機能を使う</em>ことになる。
+これで表つきのテキストを生成できる。
+beginとendが煩雑なのはRDtoolの仕様なのでしょうがない。
+コマンドラインが長くなるのでrdrt2というコマンドを用意。</p>
+<pre>$ cat examples/rttest.rd
+=begin
+= Sample RD/RT
+
+This RD contains a table.
+It is so-called RD/RT.
+
+=end
+=begin RT
+caption = Test Table
+
+     , Human, == , Dog , ==
+||  , M  , F ,M,F
+
+  x  , 1.0 , 2.0, 1.1, 1.2
+  y  , 0.4 , 0.5, 0.3, 0.1
+
+=end
+=begin
+It is simple.
+=end
+
+$ rdrt2 examples/rttest.rd | w3m -dump -T text/html
+= Sample RD/RT
+
+This RD contains a table. It is so-called RD/RT.
+
+          Test Table
+┌─┬─────┬─────┐
+│  │  Human   │   Dog    │
+│  ├──┬──┼──┬──┤
+│  │ M  │ F  │ M  │ F  │
+├─┼──┼──┼──┼──┤
+│x │ 1.0│ 2.0│ 1.1│ 1.2│
+├─┼──┼──┼──┼──┤
+│y │ 0.4│ 0.5│ 0.3│ 0.1│
+└─┴──┴──┴──┴──┘
+
+It is simple.</pre>
+<h2><a name="7" href="#7">7</a> <a name="label:27">なぜにRT</a></h2><!-- RDLabel: "なぜにRT" -->
+
+<ul>
+<li><p>HTMLやLaTeXの表の書き方がちょいイラつく。</p>
+<ul>
+<li>読み書きしにくい。</li>
+</ul></li>
+<li><p>RDに表作成機能があればいいが、いろいろ弊害が。</p>
+<ul>
+<li>RDの文法が複雑になる。</li>
+<li>RDとして見辛くなる。</li>
+</ul></li>
+<li>RTの部分だけ独自に変更が可能。</li>
+<li>俺がRDを愛してるから。</li>
+<li>自分に合った表作成ツールがほしい。</li>
+</ul>
+<h2><a name="8" href="#8">8</a> <a name="label:28">TODO</a></h2><!-- RDLabel: "TODO" -->
+
+<p>約6年、いろいろなことを考えていたが現在のシンプルな仕様のままがいいと判断した。</p>
+<h2><a name="9" href="#9">9</a> <a name="label:29">ライセンス</a></h2><!-- RDLabel: "ライセンス" -->
+
+<p>Ruby'sとします。</p>
+
+</body>
+</html>

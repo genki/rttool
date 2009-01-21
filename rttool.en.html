@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="iso-2022-jp" ?>
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+<title>RTtool</title>
+<meta http-equiv="Content-type" content="text/html; charset=iso-2022-jp" />
+<!-- head-element:nil -->
+</head>
+<body>
+<h2>Index</h2>
+
+<ul>
+<li><p><a href="#label:1">What's new</a></p>
+<ul>
+<li><a href="#label:2">[2006/09/20] 1.0.2 released</a></li>
+<li><a href="#label:3">[2005/10/28] 1.0.1 released</a></li>
+<li><a href="#label:4">[2005/10/26] 1.0.0 released</a></li>
+</ul></li>
+<li><a href="#label:5">Abstract</a></li>
+<li><a href="#label:6">Environment</a></li>
+<li><a href="#label:7">Install</a></li>
+<li><a href="#label:8">RT Syntax</a></li>
+<li><a href="#label:12">Attributes</a></li>
+<li><p><a href="#label:18">Examples</a></p>
+<ul>
+<li><a href="#label:19">The Easiest RT</a></li>
+<li><a href="#label:20">Use the Escape Attribute</a></li>
+<li><a href="#label:21">More Complex RT</a></li>
+<li><a href="#label:22">RT Included by RD (RD/RT)</a></li>
+</ul></li>
+<li><a href="#label:23">License</a></li>
+</ul>
+<hr />
+
+<h1><a name="Title:" href="#Title:">Title:</a> <a name="label:0">RTtool</a></h1><!-- RDLabel: "RTtool" -->
+
+<h2><a name="1" href="#1">1</a> <a name="label:1">What's new</a></h2><!-- RDLabel: "What's new" -->
+
+<h3><a name="1.1" href="#1.1">1.1</a> <a name="label:2">[2006/09/20] 1.0.2 released</a></h3><!-- RDLabel: "[2006/09/20] 1.0.2 released" -->
+
+<ul>
+<li>Bugfix about linefeed.</li>
+</ul>
+<h3><a name="1.2" href="#1.2">1.2</a> <a name="label:3">[2005/10/28] 1.0.1 released</a></h3><!-- RDLabel: "[2005/10/28] 1.0.1 released" -->
+
+<ul>
+<li>RTtool does not use .rd2rc anymore.</li>
+</ul>
+<h3><a name="1.3" href="#1.3">1.3</a> <a name="label:4">[2005/10/26] 1.0.0 released</a></h3><!-- RDLabel: "[2005/10/26] 1.0.0 released" -->
+
+<ul>
+<li>Escape.</li>
+<li>English document.</li>
+<li>Removed Ruby-1.8 warning.</li>
+</ul>
+<h2><a name="2" href="#2">2</a> <a name="label:5">Abstract</a></h2><!-- RDLabel: "Abstract" -->
+
+<p>RT is a simple and human-readable table format.
+RTtool is a converter from RT into various formats.
+RT can be incorporated into RD.</p>
+<p>At this time, RTtool can convert RT into HTML and plain text.
+To convert into plain text, you need <a href="http://w3m.sourceforge.net/">w3m</a>.</p>
+<h2><a name="3" href="#3">3</a> <a name="label:6">Environment</a></h2><!-- RDLabel: "Environment" -->
+
+<h2><a name="4" href="#4">4</a> <a name="label:7">Install</a></h2><!-- RDLabel: "Install" -->
+
+<p>Please execute the following commands.</p>
+<pre>ruby -ropen-uri -e 'URI("http://www.rubyist.net/~rubikitch/archive/rttool-1.0.2.tar.gz").read.display' &gt; rttool-1.0.2.tar.gz</pre>
+<pre>tar xzvf rttool-1.0.2.tar.gz</pre>
+<p>When you failed, please download it from the next link.</p>
+<ul>
+<li><a href="http://www.rubyist.net/~rubikitch/archive/rttool-1.0.2.tar.gz">rttool-1.0.2.tar.gz</a></li>
+</ul>
+<p>Then, install it.</p>
+<pre>cd rttool-1.0.2
+ruby setup.rb config
+ruby setup.rb setup
+ruby setup.rb install</pre>
+<h2><a name="5" href="#5">5</a> <a name="label:8">RT Syntax</a></h2><!-- RDLabel: "RT Syntax" -->
+
+<ul>
+<li><p>RT consists of three Blocks.</p>
+<dl>
+<dt><a name="label:9" id="label:9"></a>ConfigBlock</dt><!-- RDLabel: "ConfigBlock" -->
+<dd>
+<p>ConfigBlock consist of groups of "attribute = value".
+The following examples has <code>caption</code> attribute.
+ConfigBlock can be omitted.</p>
+</dd>
+<dt><a name="label:10" id="label:10"></a>HeaderBlock</dt><!-- RDLabel: "HeaderBlock" -->
+<dd>
+<p>A part of THEAD by HTML.
+HeaderBlock sets a header of the table.
+A header is located at the center.
+HeaderBlock can be omitted.</p>
+</dd>
+<dt><a name="label:11" id="label:11"></a>BodyBlock</dt><!-- RDLabel: "BodyBlock" -->
+<dd>
+<p>A part of TBODY by HTML.
+BodyBlock sets data of the table.
+A number is located at the right and others are located at left.</p>
+</dd>
+</dl></li>
+<li><p>The default delimiter on HeaderBlock and BodyBlock is a comma or a Tab.</p>
+<ul>
+<li>It is not necessary to be always harmonious with an upper line.</li>
+<li>Arbitrary character can be a delimiter by changing <code>delimiter</code> attribute.</li>
+</ul></li>
+<li><code>==</code> stretches the left column. (colspan)</li>
+<li><code>||</code> stretches the upper row. (rowspan)</li>
+</ul>
+<h2><a name="6" href="#6">6</a> <a name="label:12">Attributes</a></h2><!-- RDLabel: "Attributes" -->
+
+<p>In ConfigBlock, these attributes can be set.</p>
+<dl>
+<dt><a name="label:13" id="label:13"></a>caption</dt><!-- RDLabel: "caption" -->
+<dd>
+<p>The caption of the table.</p>
+</dd>
+<dt><a name="label:14" id="label:14"></a>delimiter</dt><!-- RDLabel: "delimiter" -->
+<dd>
+<p>The delimiter of the table.</p>
+</dd>
+<dt><a name="label:15" id="label:15"></a>rowspan</dt><!-- RDLabel: "rowspan" -->
+<dd>
+<p>A string which stretches the left column. (defalut: <code>==</code>)</p>
+</dd>
+<dt><a name="label:16" id="label:16"></a>colspan</dt><!-- RDLabel: "colspan" -->
+<dd>
+<p>A string which stretches the upper row. (default: <code>||</code>)</p>
+</dd>
+<dt><a name="label:17" id="label:17"></a>escape</dt><!-- RDLabel: "escape" -->
+<dd>
+<p>An escape character.
+This attribute is disabled by default.</p>
+</dd>
+</dl>
+<h2><a name="7" href="#7">7</a> <a name="label:18">Examples</a></h2><!-- RDLabel: "Examples" -->
+
+<h3><a name="7.1" href="#7.1">7.1</a> <a name="label:19">The Easiest RT</a></h3><!-- RDLabel: "The Easiest RT" -->
+
+<pre>$ cat examples/easiest.rt
+1, 2, 3
+4, 5, 6
+7, 8, 9
+
+$ rt2 examples/easiest.rt
+┌─┬─┬─┐
+│ 1│ 2│ 3│
+├─┼─┼─┤
+│ 4│ 5│ 6│
+├─┼─┼─┤
+│ 7│ 8│ 9│
+└─┴─┴─┘
+
+$ rt2 -r rt/rt2html-lib examples/easiest.rt
+&lt;!-- setup --&gt;
+&lt;table border="1"&gt;
+&lt;!-- setup end --&gt;
+
+&lt;!-- Header --&gt;
+&lt;!-- Header end --&gt;
+
+&lt;!-- Body --&gt;
+&lt;tbody&gt;
+&lt;tr&gt;&lt;td align="right"&gt;1&lt;/td&gt;&lt;td align="right"&gt;2&lt;/td&gt;&lt;td align="right"&gt;3&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td align="right"&gt;4&lt;/td&gt;&lt;td align="right"&gt;5&lt;/td&gt;&lt;td align="right"&gt;6&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td align="right"&gt;7&lt;/td&gt;&lt;td align="right"&gt;8&lt;/td&gt;&lt;td align="right"&gt;9&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;!-- Body end --&gt;
+
+&lt;!-- teardown --&gt;
+&lt;/table&gt;
+&lt;!-- teardown end --&gt;</pre>
+<h3><a name="7.2" href="#7.2">7.2</a> <a name="label:20">Use the Escape Attribute</a></h3><!-- RDLabel: "Use the Escape Attribute" -->
+
+<pre>$ cat examples/escape.rt
+delimiter = ;
+escape = \
+
+\z   ; \;1 ; 2
+
+$ rt2 examples/escape.rt
+┌─┬─┬─┐
+│\z│;1│ 2│
+└─┴─┴─┘
+
+$ rt2 -r rt/rt2html-lib examples/escape.rt
+&lt;!-- setup --&gt;
+&lt;table border="1"&gt;
+&lt;!-- setup end --&gt;
+
+&lt;!-- Header --&gt;
+&lt;!-- Header end --&gt;
+
+&lt;!-- Body --&gt;
+&lt;tbody&gt;
+&lt;tr&gt;&lt;td align="left"&gt;\z&lt;/td&gt;&lt;td align="left"&gt;;1&lt;/td&gt;&lt;td align="right"&gt;2&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;!-- Body end --&gt;
+
+&lt;!-- teardown --&gt;
+&lt;/table&gt;
+&lt;!-- teardown end --&gt;</pre>
+<h3><a name="7.3" href="#7.3">7.3</a> <a name="label:21">More Complex RT</a></h3><!-- RDLabel: "More Complex RT" -->
+
+<pre>$ cat examples/test1.rt
+caption = Test Table
+
+     , Human, == , Dog , ==
+||  , M  , F ,M,F
+
+  x  , 1.0 , 2.0, 1.1, 1.2
+  y  , 0.4 , 0.5, 0.3, 0.1
+
+$ rt2 examples/test1.rt
+          Test Table
+┌─┬─────┬─────┐
+│  │  Human   │   Dog    │
+│  ├──┬──┼──┬──┤
+│  │ M  │ F  │ M  │ F  │
+├─┼──┼──┼──┼──┤
+│x │ 1.0│ 2.0│ 1.1│ 1.2│
+├─┼──┼──┼──┼──┤
+│y │ 0.4│ 0.5│ 0.3│ 0.1│
+└─┴──┴──┴──┴──┘
+
+$ rt2 -r rt/rt2html-lib examples/test1.rt
+&lt;!-- setup --&gt;
+&lt;table border="1"&gt;
+&lt;caption&gt;Test Table&lt;/caption&gt;
+&lt;!-- setup end --&gt;
+
+&lt;!-- Header --&gt;
+&lt;thead&gt;
+&lt;tr&gt;&lt;th rowspan="2"&gt;&lt;/th&gt;&lt;th colspan="2"&gt;Human&lt;/th&gt;&lt;th colspan="2"&gt;Dog&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;th&gt;M&lt;/th&gt;&lt;th&gt;F&lt;/th&gt;&lt;th&gt;M&lt;/th&gt;&lt;th&gt;F&lt;/th&gt;&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;!-- Header end --&gt;
+
+&lt;!-- Body --&gt;
+&lt;tbody&gt;
+&lt;tr&gt;&lt;td align="left"&gt;x&lt;/td&gt;&lt;td align="right"&gt;1.0&lt;/td&gt;&lt;td align="right"&gt;2.0&lt;/td&gt;&lt;td align="right"&gt;1.1&lt;/td&gt;&lt;td align="right"&gt;1.2&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td align="left"&gt;y&lt;/td&gt;&lt;td align="right"&gt;0.4&lt;/td&gt;&lt;td align="right"&gt;0.5&lt;/td&gt;&lt;td align="right"&gt;0.3&lt;/td&gt;&lt;td align="right"&gt;0.1&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;!-- Body end --&gt;
+
+&lt;!-- teardown --&gt;
+&lt;/table&gt;
+&lt;!-- teardown end --&gt;</pre>
+<h3><a name="7.4" href="#7.4">7.4</a> <a name="label:22">RT Included by RD (RD/RT)</a></h3><!-- RDLabel: "RT Included by RD (RD/RT)" -->
+
+<pre>$ cat examples/rttest.rd
+=begin
+= Sample RD/RT
+
+This RD contains a table.
+It is so-called RD/RT.
+
+=end
+=begin RT
+caption = Test Table
+
+     , Human, == , Dog , ==
+||  , M  , F ,M,F
+
+  x  , 1.0 , 2.0, 1.1, 1.2
+  y  , 0.4 , 0.5, 0.3, 0.1
+
+=end
+=begin
+It is simple.
+=end
+
+$ rdrt2 examples/rttest.rd | w3m -dump -T text/html
+= Sample RD/RT
+
+This RD contains a table. It is so-called RD/RT.
+
+          Test Table
+┌─┬─────┬─────┐
+│  │  Human   │   Dog    │
+│  ├──┬──┼──┬──┤
+│  │ M  │ F  │ M  │ F  │
+├─┼──┼──┼──┼──┤
+│x │ 1.0│ 2.0│ 1.1│ 1.2│
+├─┼──┼──┼──┼──┤
+│y │ 0.4│ 0.5│ 0.3│ 0.1│
+└─┴──┴──┴──┴──┘
+
+It is simple.</pre>
+<h2><a name="8" href="#8">8</a> <a name="label:23">License</a></h2><!-- RDLabel: "License" -->
+
+<p>Ruby's</p>
+
+</body>
+</html>

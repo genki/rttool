@@ -1,0 +1,162 @@
+#! /usr/bin/env ruby
+=begin
+= NAME
+rt2 - converter from RT to other mark-up language.
+$Id: rt2 597 2005-10-18 21:03:12Z rubikitch $
+= SYNOPSIS
+  rt2 [-r <visitor>] [options] <file>
+
+= DESCRIPTION
+rt2 inputs from ((|<file>|)) and outputs in (({STDOUT})). you can
+choose ((|<visitor>|)) to select output format. For example, use
+"rt/rt2html-lib.rb" to turn it into HTML.
+
+= OPTIONS
+please check the output of 
+  % rt2 --help
+and
+  % rt2 -r rt/rt2html-lib.rb --help
+
+= FILES
+  * ~/.rt2rc - User configuration file.
+
+= SEE ALSO
+ruby(1)
+=end
+
+require "kconv"
+require "optparse"
+require "rt/rtparser"
+
+def Kconv.name2const(name)
+  case name
+  when "iso-2022-jp"
+    Kconv::JIS
+  when "euc-jp"
+    Kconv::EUC
+  when "shift_jis"
+    Kconv::SJIS
+  end
+end
+
+include RT
+
+# global vars
+$Visitor = nil
+$RT2_Sub_OptionParser = nil
+
+# local vars
+include_path = []
+with_part = []
+output_file = nil
+output_index = nil
+out_code = nil
+from_rto = nil
+
+# user option
+$DEFAULT_FORMAT_LIB = "rt/rt2txt-lib"
+$RC = {}
+
+
+# initialize OptionParser
+ARGV.options = OptionParser.new("Usage: #{$0} [options] rt-file > output\n") do
+  |q|
+  q.on_head("global options:")
+  
+  q.on("-rLIB", "--require=LIB",
+       String,
+       "choose format library.") do |i|
+    # require LIB
+    require i
+    if $Visitor_Class && !$Visitor
+      $Visitor = $Visitor_Class.new()
+      if $RT2_Sub_OptionParser    
+	require $RT2_Sub_OptionParser
+	$RT2_Sub_OptionParser = nil
+      end
+    end
+  end
+  
+  q.on("-oNAME",
+       String,
+       "indicate base name of output file") do |i|
+    output_file = i
+  end
+
+  q.on("--out-code=KCODE",
+       String,
+       "character encoding of output.(jis|euc|sjis)") do |i|
+    case i
+    when /sjis|shift-jis/i
+      out_code = "shift_jis"
+    when /jis|iso-2022-jp/i
+      out_code = "iso-2022-jp"
+    when /euc|euc-jp/i
+      out_code = "euc-jp"
+    end
+  end
+      
+  q.on("-IPATH", "--include-path=PATH",
+       String,
+       "add PATH to list of include path") do |i|
+    # add to include path
+    include_path.unshift(i)
+  end
+  
+  q.on_tail("--help",
+	    "print this message") do
+    STDERR.print(q.to_s)
+    exit(0)
+  end
+end # OptionParser.new
+
+# require format lib implicitly
+unless File.basename($0) == "rt2"
+  require "rt/" + File.basename($0) + "-lib.rb"
+  require $RT2_Sub_OptionParser  if $RT2_Sub_OptionParser
+  # make visitor
+  $Visitor = $Visitor_Class.new()
+end
+
+begin
+  ARGV.parse!
+rescue
+  STDERR.print("Error: " + $!.inspect + "\n")
+  STDERR.print(ARGV.options.to_s)
+  exit(1)
+end
+
+unless $Visitor_Class
+  require $DEFAULT_FORMAT_LIB
+  $Visitor = $Visitor_Class.new
+end
+
+
+# file base name setup
+$Visitor.filename = output_file if output_file
+
+# character encoding
+if out_code
+  begin
+    $Visitor.charcode = out_code
+  rescue NameError
+  end
+end
+
+parsed = RTParser::parse(readlines.join)
+# output  
+out = $Visitor.visit(parsed)
+
+# character encoding convert
+out = Kconv.kconv(out, Kconv.name2const(out_code), Kconv::AUTO) if out_code
+
+if output_file
+  filename = output_file + "." + $Visitor.type::OUTPUT_SUFFIX
+  file = open(filename, "w")
+  file.print(out)
+  file.close
+  STDERR.print("#{$0}: output to #{filename}...\n")
+else
+  print(out)
+end
+
